@@ -1,0 +1,25 @@
+.contact-page{
+	padding: 50px 0;
+	.maps{
+		margin-bottom: 30px;
+	}
+	.title-about-page{
+		text-align: center;
+		margin-bottom: 30px;
+		h4{
+			font-weight: bold;
+			font-size: 24px;
+		}
+	}
+	.contact-address{
+		text-align: center;
+		margin-bottom: 30px;
+		>i{
+			font-size: 4em;
+			color: $color;
+			display: block;
+			margin-bottom: 20px;
+		}
+	}
+
+}

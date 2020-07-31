@@ -388,7 +388,7 @@ function Helper(){
         methods.initToTop();
         methods.initFixTop();
         methods.initMenu();
-        methods.initSlickSlider();
+        //methods.initSlickSlider();
         methods.initSocial();
         methods.initCategories();
         methods.initTooltip();

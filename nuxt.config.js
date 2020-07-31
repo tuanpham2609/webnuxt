@@ -23,7 +23,6 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-
       { rel: 'stylesheet prefetch', href: 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css' },
       { href: "/vendor/bootstrap/css/bootstrap.min.css", rel: "stylesheet" },
       { href: "/vendor/font-awesome-4.7.0/css/font-awesome.min.css", rel: "stylesheet" },

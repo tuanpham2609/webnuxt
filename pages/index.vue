@@ -502,15 +502,15 @@
       }
     },
     mounted(){
-      if( $('.regular1').length ){
-        $('.regular1').on('init', function(event, slick){
-            $('.navbar-category .category').css('min-height' , $('.regular1').height());
+      let slider = $('.regular1');
+      if( slider.length ){
+        slider.on('init', function(event, slick){
+            $('.navbar-category .category').css('min-height' , slider.height());
         });
         $(window).on('resize', function(){
-            $('.navbar-category .category').css('min-height' , $('.regular1').height());
+            $('.navbar-category .category').css('min-height' , slider.height());
         })
-      }   
-      $(".regular1").not('slick-initialized').slick({
+        slider.not('slick-initialized').slick({
           dots: true,
           infinite: true,
           speed: 900,
@@ -551,7 +551,8 @@
           }
 
           ]
-      })
+        })
+      }   
     }
   }
 </script>

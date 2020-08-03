@@ -13,6 +13,7 @@ const createStore = () => {
         },
         mutations: {
             GET_MENU(state, data) {
+                data.logo = JSON.parse(data.logo[0].data);
                 state.headerData = data;
             }
         },

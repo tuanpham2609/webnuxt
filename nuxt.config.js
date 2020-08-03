@@ -39,7 +39,6 @@ export default {
       { src: "/vendor/jssocials/jssocials.min.js" },
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js' },
       { src: "/vendor/bootstrap/js/bootstrap.min.js" },
-      { src: "/vendor/WOW-master/dist/wow.min.js" },
       { src: "/vendor/slick/slick.js" },
       { src: "/vendor/fancybox/jquery.fancybox.min.js" },
       { type: "text/javascript", src: "/js/main.js" },
@@ -54,8 +53,7 @@ export default {
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
   */
-  plugins: [
-  ],
+  plugins: [],
   /*
   ** Auto import components
   ** See https://nuxtjs.org/api/configuration-components
@@ -65,6 +63,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/date-fns',
   ],
   /*
   ** Nuxt.js modules

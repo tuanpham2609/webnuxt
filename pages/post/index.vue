@@ -57,33 +57,16 @@
                                     <a href="product.html">Tin tức đọc nhiều</a>
                                 </li>
                             </ul>
-                            <div class="news-highlights">
+                            <div class="news-highlights" v-if="siderbar">
                                 <h4>Tin tức nổi bật</h4>
                                 <div class="box-news-hl-full">
-                                    <a href="news-detail.php" class="box-news-hl">
+                                    <nuxt-link :to="{name: 'post-slug', params: { id:item.id,slug:item.slug } }" class="box-news-hl" 
+                                        v-for="(item, index) in siderbar" :key="index">
                                         <div class="ed-img-news-hl">
-                                            <img src="/images/news/pic-11.jpg" alt="">
+                                            <img :src="$store.state.api+'/img/'+item.image" :alt="item.name">
                                         </div>
-                                        <p>"Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất, "Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất</p>
-                                    </a>
-                                    <a href="news-detail.php" class="box-news-hl">
-                                        <div class="ed-img-news-hl">
-                                            <img src="/images/news/pic-12.jpg" alt="">
-                                        </div>
-                                        <p>"Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất</p>
-                                    </a>
-                                    <a href="news-detail.php" class="box-news-hl">
-                                        <div class="ed-img-news-hl">
-                                            <img src="/images/news/pic-13.jpg" alt="">
-                                        </div>
-                                        <p>"Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất</p>
-                                    </a>
-                                    <a href="news-detail.php" class="box-news-hl">
-                                        <div class="ed-img-news-hl">
-                                            <img src="/images/news/pic-14.jpg" alt="">
-                                        </div>
-                                        <p>"Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất</p>
-                                    </a>
+                                        <p>{{item.short_content}}</p>
+                                    </nuxt-link>
                                 </div>
                             </div>
                             <div class="pic-advertise-news">
@@ -92,68 +75,30 @@
                         </div>
                     </div>
                     <div class="col-md-9 col-sm-8">
-                        <div class="right-news">
-                            <div class="box-news-page">
+                        <div class="right-news" v-if="categories">
+                            <div class="box-news-page" v-for="(item, index) in categories" :key="index">
                                 <a href="news-detail.php" class="pic-news-page">
-                                    <img src="/images/news/news-4.jpg" class="img-responsive">
+                                    <img v-if="item.image" :src="$store.state.api+'/img/'+item.image" class="img-responsive">
                                 </a>
                                 <ul class="date-box-news-page">
-                                    <li>18</li>
-                                    <li>Tháng 7</li>
+                                    <li>{{(item.created_at)?$dateFns.format(item.created_at, 'dd'):null}}</li>
+                                    <li>Tháng {{(item.created_at)?$dateFns.format(item.created_at, 'MM'):null}}</li>
                                 </ul>
                                 <div class="txt-box-news-page">
-                                    <a href="news-detail.php"><h4>Những tác phẩm từ sách lên phim hay nhất năm 2017</h4></a>
+                                    <a href="news-detail.php"><h4>{{item.name}}</h4></a>
                                     <ul>
-                                        <li>Đăng bởi: Anh Tài</li>
-                                        <li>Ngày đăng: 18-07-2018</li>
+                                        <li>Đăng bởi: Pham duy tuan</li>
+                                        <li>Ngày đăng: {{(item.created_at)?$dateFns.format(item.created_at, 'dd-MM-yyyy/hh:mm:ss'):null}}</li>
                                     </ul>
-                                    <p>Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.</p>
-                                </div>
-                            </div>
-                            <div class="box-news-page">
-                                <a href="news-detail.php" class="pic-news-page">
-                                    <img src="/images/news/news-5.jpg" class="img-responsive">
-                                </a>
-                                <ul class="date-box-news-page">
-                                    <li>18</li>
-                                    <li>Tháng 7</li>
-                                </ul>
-                                <div class="txt-box-news-page">
-                                    <a href="news-detail.php"><h4>Những tác phẩm từ sách lên phim hay nhất năm 2017</h4></a>
-                                    <ul>
-                                        <li>Đăng bởi: Anh Tài</li>
-                                        <li>Ngày đăng: 18-07-2018</li>
-                                    </ul>
-                                    <p>Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.</p>
-                                </div>
-                            </div>
-                            <div class="box-news-page">
-                                <a href="news-detail.php" class="pic-news-page">
-                                    <img src="/images/news/news-6.jpg" class="img-responsive">
-                                </a>
-                                <ul class="date-box-news-page">
-                                    <li>18</li>
-                                    <li>Tháng 7</li>
-                                </ul>
-                                <div class="txt-box-news-page">
-                                    <a href="news-detail.php"><h4>Những tác phẩm từ sách lên phim hay nhất năm 2017</h4></a>
-                                    <ul>
-                                        <li>Đăng bởi: Anh Tài</li>
-                                        <li>Ngày đăng: 18-07-2018</li>
-                                    </ul>
-                                    <p>Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.</p>
+                                    <p>{{item.short_content}}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="ed-pagination">
-                            <ul class="pagination setting-ul">
-                                <li class="disabled"><span><i class="fa fa-angle-left"></i></span></li>
-                                <li class="active"><span>1</span></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#" rel="next"><i class="fa fa-angle-right"></i></a></li>
-                            </ul>
+                            <paginate :current="list_post.current_page" v-model="list_post.current_page"
+                                :total="list_post.last_page">
+                            </paginate>
                         </div>
 
                     
@@ -163,3 +108,42 @@
         </div>
     </div>
 </template>
+<script>
+import Paginate from '../../components/paginate';
+export default {
+    components: { Paginate },
+    data(){
+        return{
+            categories:[],
+            siderbar:[],
+            list_post: {
+                current_page: 1,
+                last_page: 0,
+                total: 0,
+                per_page: 0
+            },
+        }
+    },
+    created(){
+        this.getCatagory();
+    },
+    methods:{
+        getCatagory(){
+            var vm = this;
+            vm.$axios.get(`${vm.$store.state.api}/web/category/${vm.$route.params.id}?page=${this.list_post.current_page}`)
+                .then(res => {
+                    vm.categories = res.data.category.data;
+                    vm.siderbar = res.data.siderbar;
+                    vm.list_post.current_page = res.data.category.current_page;
+                    vm.list_post.last_page = res.data.category.last_page;
+                    vm.list_post.total = res.data.category.total;
+                });
+        }
+    },
+    watch: {
+        'list_post.current_page': function (new_val) {
+            this.getCatagory();
+        }
+    }
+}
+</script>

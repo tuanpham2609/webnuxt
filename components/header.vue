@@ -3,7 +3,7 @@
         <header class="header">
             <div class="header-navbar">
                 <nav class="navbar navbar-inverse getFixed-1" role="navigation">
-                    <div class="container">
+                    <div class="container" v-if="menu">
                         <div class="ed-toggle-mobile getFixed-1">
                             <ul class="">
                                 <li><a href="index.php" class="logo"><img src="/images/logo/logo.png"></a></li>
@@ -22,12 +22,14 @@
                         <div class="navbar-collapse1" id="menu">
                             <ul class="nav navbar-nav ed-ul">
                                 <li class="hidden-sm hidden-xs">
-                                    <nuxt-link to="/"><img src="/images/logo/logo.png"></nuxt-link>
+                                    <nuxt-link to="/"><img :src="$store.state.api+'/img/'+menu.logo.img"></nuxt-link>
                                 </li>
-                                <li class="active">
-                                    <nuxt-link to="/">Trang chủ</nuxt-link>
+                                <li v-for="(item , index) in menu.menu" :key="index">
+                                    <nuxt-link :to="{name: 'post', params: { id:item.id,slug:item.slug } }">
+                                        {{item.name}}
+                                    </nuxt-link>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <nuxt-link to="/about">Giới thiệu</nuxt-link>
                                 </li>
                                 <li>
@@ -35,23 +37,13 @@
                                 </li>
                                 <li>
                                     <nuxt-link to="/contact">Liên hệ</nuxt-link>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
                 </nav>
             </div>
         </header>
-        <div v-if="menu">
-            <div v-for="(item, index) in menu.menu" :key="index">
-                {{item.name}}
-            </div>
-        </div>
-        <div v-if="menu">
-            <div v-for="(item, index) in menu.logo" :key="index">
-                {{item}}
-            </div>
-        </div>
     </div>
 </template>
 <script>
@@ -59,7 +51,6 @@ import { mapGetters } from 'vuex';
 
 export default {
     created(){
-        console.log(this.$store.state.api)
         this.$store.dispatch('getMenu');
     },
     computed: {

@@ -58,63 +58,41 @@
                                 </li>
                             </ul>
 
-                            <div class="news-highlights">
+                            <div class="news-highlights" v-if="categories">
                                 <h4>Tin tức nổi bật</h4>
                                 <div class="box-news-hl-full">
-                                    <a href="news-detail.php" class="box-news-hl">
+                                    <nuxt-link :to="{name: 'post-slug', params: { id:item.id,slug:item.slug } }" class="box-news-hl" 
+                                        v-for="(item, index) in categories" :key="index">
                                         <div class="ed-img-news-hl">
-                                            <img src="/images/news/pic-11.jpg" alt="">
+                                            <img :src="$store.state.api+'/img/'+item.image" alt="item.name">
                                         </div>
-                                        <p>"Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất, "Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất</p>
-                                    </a>
-                                    <a href="news-detail.php" class="box-news-hl">
-                                        <div class="ed-img-news-hl">
-                                            <img src="/images/news/pic-12.jpg" alt="">
-                                        </div>
-                                        <p>"Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất</p>
-                                    </a>
-                                    <a href="news-detail.php" class="box-news-hl">
-                                        <div class="ed-img-news-hl">
-                                            <img src="/images/news/pic-13.jpg" alt="">
-                                        </div>
-                                        <p>"Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất</p>
-                                    </a>
-                                    <a href="news-detail.php" class="box-news-hl">
-                                        <div class="ed-img-news-hl">
-                                            <img src="/images/news/pic-14.jpg" alt="">
-                                        </div>
-                                        <p>"Long thân tương" được chọn vào top đầu những cuốn tiếu thuyết hay nhất</p>
-                                    </a>
+                                        <p>{{item.short_content}}</p>
+                                    </nuxt-link>
                                 </div>
                             </div>
-
                             <div class="pic-advertise-news">
                                 <a href="#"><img src="/images/quangcao/qc-1.jpg" class="img-responsive"></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9 col-sm-8">
+                    <div class="col-md-9 col-sm-8" v-if="news"> 
                         <div class="right-news-detail">
                             <div class="box-news-page">
-                                <img src="/images/news/news-4.jpg" class="img-responsive">
+                                <img v-if="news.image" :src="$store.state.api+'/img/'+news.image" class="img-responsive">
                                 <ul class="date-box-news-page">
-                                    <li>18</li>
-                                    <li>Tháng 7</li>
+                                    <li>
+                                        {{(news.created_at)?$dateFns.format(news.created_at, 'dd'):null}}
+                                    </li>
+                                    <li>Tháng {{(news.created_at)?$dateFns.format(news.created_at, 'MM'):null}}</li>
                                 </ul>
                                 <div class="txt-box-news-page">
-                                    <h4>Những tác phẩm từ sách lên phim hay nhất năm 2017</h4>
+                                    <h4>{{news.name}}</h4>
                                     <ul>
                                         <li>Đăng bởi: Anh Tài</li>
-                                        <li>Ngày đăng: 18-07-2018</li>
+                                        <li>Ngày đăng: {{(news.created_at)?$dateFns.format(news.created_at, 'dd-MM-yyyy/hh:mm:ss'):null}}</li>
                                     </ul>
                                 </div>
-                                <article class="page-content">
-                                    
-                                    <p>Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.</p>
-                                    <p>Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.</p>
-                                    <p>Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.Đương nhiên kịch bản chuyển thể không phải là nguyên nhân duy nhất giúp các bộ phim thành công hay thấ bại, tuy nhiên một kịch bản phim chặt chẽ sẽ giúp người hâm mộ dễ dàng đánh giá tốt hơn tác phẩm họ phải trả tiền để được xem.</p>
-                                </article>
-
+                                <article class="page-content" v-html="news.description"></article>
                                 <div class="tag-share">
                                     <ul class="ed-tags">
                                         <li><i class="fa fa-tags"></i></li>
@@ -130,7 +108,7 @@
                                     </div>
                                 </div>
 
-                                <div class="customer-comment">
+                                <!-- <div class="customer-comment">
                                     <h4>Ý kiến khách hàng</h4>
 
                                     <div class="box-comment">
@@ -281,7 +259,7 @@
                                             </div>
                                         </div>
                                     </section>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>
@@ -292,11 +270,30 @@
             </div>
         </div>
     </div>
-</template>
+</template> 
 <script>
+
 export default {
+    data(){
+        return {
+            news:{},
+            categories:[]
+        }
+    },
     created(){
-        console.log(this.$route.params.id)
+        this.getNews();
+    },
+    methods:{
+        getNews(){
+            var vm = this;
+            vm.$axios.get(`${vm.$store.state.api}/web/post/${vm.$route.params.id}`)
+                .then(res => {
+                    vm.news = res.data.post;
+                    vm.categories = res.data.category;
+                    console.log(vm.news)
+                    console.log(vm.categories)
+                });
+        }
     }
 }
 </script>

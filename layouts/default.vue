@@ -15,7 +15,7 @@ import FooTer from "../components/footer";
 
 export default {
   components: {
-    HeaDer,FooTer
+    HeaDer,FooTer 
   }
 }
 </script>

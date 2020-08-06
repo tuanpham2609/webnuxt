@@ -58,11 +58,11 @@
             <div v-for="(item, index) in menu.topTrending" :key="index">
               <div class="col-sm-9">
                 <div class="box-prods">
-                  <nuxt-link :to="{name: 'post-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd">
+                  <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd">
                     <img :src="$store.state.api+'/img/'+item.image" alt="">
                   </nuxt-link>
                   <div class="txt-prd">
-                    <nuxt-link :to="'post/'+item.id">
+                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
                       <h4>{{item.name}}</h4>
                     </nuxt-link>
                     <p>{{item.short_content}}</p>

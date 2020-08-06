@@ -12,69 +12,6 @@
         <div class="news-page">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-4">
-                        <div class="left-news">
-                            <ul class="category-news">
-                                <h4>Danh mục tin tức</h4>
-                                <li class="has-submenu">
-                                    <a href="product.html">Tin tức mới nhất <i class="fa fa-angle-down icon-first-submenu"></i></a>
-                                    <ul class="submenu-1 ed-ul">
-                                        <li class="has-second-submenu"><a href="product.php">Tin tức mới nhất <i class="fa fa-angle-down icon-second-submenu"></i></a>
-                                            <ul class="submenu-2 ed-ul">
-                                                <li><a href="product.php"> Tin tức mới nhất 1</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="has-second-submenu"><a href="product.php">Tin tức gần đây <i class="fa fa-angle-down icon-second-submenu"></i></a>
-                                            <ul class="submenu-2 ed-ul">
-                                                <li><a href="product.php"> Tin tức gần đây 1</a></li>
-                                                <li><a href="product.php"> Tin tức gần đây 2</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="product.php">Tin tức khác </a></li>
-                                    </ul>
-                                </li>
-                                <li class="has-submenu">
-                                    <a href="product.html">Tin tức đọc nhiều nhất <i class="fa fa-angle-down icon-first-submenu"></i></a>
-                                    <ul class="submenu-1 ed-ul">
-                                        <li class="has-second-submenu"><a href="product.php">Tin tức mới nhất <i class="fa fa-angle-down icon-second-submenu"></i></a>
-                                            <ul class="submenu-2 ed-ul">
-                                                <li><a href="product.php"> Tin tức mới nhất 1</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="has-second-submenu"><a href="product.php">Tin tức gần đây <i class="fa fa-angle-down icon-second-submenu"></i></a>
-                                            <ul class="submenu-2 ed-ul">
-                                                <li><a href="product.php"> Tin tức gần đây 1</a></li>
-                                                <li><a href="product.php"> Tin tức gần đây 2</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="product.php">Tin tức khác </a></li>
-                                    </ul>
-                                </li>
-                                <li class="has-submenu">
-                                    <a href="product.html">Tin tức xem nhiều</a>
-                                </li>
-                                <li class="has-submenu">
-                                    <a href="product.html">Tin tức đọc nhiều</a>
-                                </li>
-                            </ul>
-
-                            <div class="news-highlights" v-if="categories">
-                                <h4>Tin tức nổi bật</h4>
-                                <div class="box-news-hl-full">
-                                    <nuxt-link :to="{name: 'post-slug', params: { id:item.id,slug:item.slug } }" class="box-news-hl" 
-                                        v-for="(item, index) in categories" :key="index">
-                                        <div class="ed-img-news-hl">
-                                            <img :src="$store.state.api+'/img/'+item.image" alt="item.name">
-                                        </div>
-                                        <p>{{item.short_content}}</p>
-                                    </nuxt-link>
-                                </div>
-                            </div>
-                            <div class="pic-advertise-news">
-                                <a href="#"><img src="/images/quangcao/qc-1.jpg" class="img-responsive"></a>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-9 col-sm-8" v-if="news"> 
                         <div class="right-news-detail">
                             <div class="box-news-page">
@@ -266,6 +203,25 @@
 
 
                     </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="left-news">
+                            <div class="news-highlights" v-if="categories">
+                                <h4>Tin tức nổi bật</h4>
+                                <div class="box-news-hl-full">
+                                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="box-news-hl" 
+                                        v-for="(item, index) in categories" :key="index">
+                                        <div class="ed-img-news-hl">
+                                            <img :src="$store.state.api+'/img/'+item.image" alt="item.name">
+                                        </div>
+                                        <p>{{item.short_content}}</p>
+                                    </nuxt-link>
+                                </div>
+                            </div>
+                            <div class="pic-advertise-news">
+                                <a href="#"><img src="/images/quangcao/qc-1.jpg" class="img-responsive"></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -286,14 +242,21 @@ export default {
     methods:{
         getNews(){
             var vm = this;
+            vm.$store.state.loading = true;
             vm.$axios.get(`${vm.$store.state.api}/web/post/${vm.$route.params.id}`)
                 .then(res => {
                     vm.news = res.data.post;
                     vm.categories = res.data.category;
-                    console.log(vm.news)
-                    console.log(vm.categories)
+                    vm.$store.state.loading = false;
                 });
         }
-    }
+    },
+    mounted() {
+        $("#share").jsSocials({
+            showLabel: false,
+            showCount: false,
+            shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest"]
+        });
+    },
 }
 </script>

@@ -44,164 +44,107 @@
                                         <div id="share"></div>
                                     </div>
                                 </div>
-
-                                <!-- <div class="customer-comment">
+                                <div class="customer-comment" v-if="comments && comments.length > 0">
                                     <h4>Ý kiến khách hàng</h4>
-
-                                    <div class="box-comment">
-                                        <div class="avar-comment">
-                                            <img src="/images/avartar/avartar-1.jpg" alt="">
-                                        </div>
+                                    <div class="box-comment" v-for="(item, index) in comments" :key="index">
                                         <div class="txt-comment">
-                                            <h5>Anh Tai</h5>
-                                            <h6>03/07/2018 - 15h30 <a href="#"><i class="fa fa-mail-reply" data-toggle="tooltip" title="Trả lời"></i></a></h6>
-                                            <p>Hy vọng với những chia sẻ đó của chúng tôi, các bạn đã hiểu biết thêm được phần nào về các dịch vụ thiết bị nội thất Hà Nội. Chúc các bạn sớm tìm được cho mình một dịch vụ ưng ý.</p>
+                                            <h5>{{item.name}}</h5>
+                                            <h6>
+                                                {{(item.created_at)?$dateFns.format(news.created_at, 'dd-MM-yyyy/hh:mm:ss'):null}} 
+                                                <a @click="replyComment(item)"><i class="fa fa-mail-reply" data-toggle="tooltip" title="Trả lời"></i></a>
+                                            </h6>
+                                            <p>{{item.content}}</p>
                                         </div>
-                                    </div>
-                                    <div class="rep-comment">
-                                        <div class="box-comment">
-                                            <div class="avar-comment">
-                                                <img src="/images/avartar/avartar-1.jpg" alt="">
-                                            </div>
-                                            <div class="txt-comment">
-                                                <h5>Anh Tai</h5>
-                                                <h6>03/07/2018 - 15h30</h6>
-                                                <p>Hy vọng với những chia sẻ đó của chúng tôi, các bạn đã hiểu biết thêm được phần nào về các dịch vụ thiết bị nội thất Hà Nội. Chúc các bạn sớm tìm được cho mình một dịch vụ ưng ý.</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-rep">
-                                            <form>
-                                                <div class="form-group">
-                                                    <textarea class="form-control" rows="3" placeholder="Nhập nội dung" id="comment"></textarea>
+                                        <div class="rep-comment">
+                                            <div class="box-comment">
+                                                <div class="txt-comment" v-for="(_item, _index) in item.commentChild" :key="_index">
+                                                    <h5>{{_item.name}}</h5>    
+                                                    <p>{{_item.content}}</p>
                                                 </div>
-                                                <button type="submit" class="">Gửi</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    
-
-                                    <div class="box-comment">
-                                        <div class="avar-comment">
-                                            <img src="/images/avartar/avartar-1.jpg" alt="">
-                                        </div>
-                                        <div class="txt-comment">
-                                            <h5>Anh Tai</h5>
-                                            <h6>03/07/2018 - 15h30 <a href="#"><i class="fa fa-mail-reply" data-toggle="tooltip" title="Trả lời"></i></a></h6>
-                                            <p>Hy vọng với những chia sẻ đó của chúng tôi, các bạn đã hiểu biết thêm được phần nào về các dịch vụ thiết bị nội thất Hà Nội. Chúc các bạn sớm tìm được cho mình một dịch vụ ưng ý.</p>
-                                        </div>
-                                    </div>
-                                    <div class="rep-comment">
-                                        <div class="form-rep">
-                                            <form>
-                                                <div class="form-group">
-                                                    <textarea class="form-control" rows="3" placeholder="Nhập nội dung" id="comment"></textarea>
-                                                </div>
-                                                <button type="submit" class="">Gửi</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="ed-pagination">
-                                        <ul class="pagination setting-ul">
-                                            <li class="disabled"><span><i class="fa fa-long-arrow-left"></i></span></li>
-                                            <li class="active"><span>1</span></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#" rel="next"><i class="fa fa-long-arrow-right"></i></a></li>
-                                        </ul>
-                                    </div>
-
-
-                                    <div class="write-comment">
-                                        <h4>Viết bình luận</h4>
-
-                                        <div class="login-to-comment">
-                                            <p>Bạn phải <a href="#">Đăng nhập</a> mới có thể bình luận bài viết của chúng tôi.</p>
-                                        </div>
-
-                                        <div class="comment-full-page">
-                                            <div class="form-rep">
+                                            </div>
+                                            <div class="form-rep" v-if="item.reply">
                                                 <form>
                                                     <div class="form-group">
-                                                        <textarea class="form-control" rows="3" placeholder="Nhập nội dung" id="comment"></textarea>
+                                                        <textarea class="form-control" rows="3" placeholder="Nhập nội dung" v-model="item.content_reply"></textarea>
                                                     </div>
-                                                    <button type="submit" class="">Gửi</button>
+                                                    <button type="button" data-toggle="modal" data-target="#exampleModal1">Gửi</button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="ed-pagination">
+                                        <paginate :current="list_post.current_page" v-model="list_post.current_page"
+                                            :total="list_post.last_page">
+                                        </paginate>
+                                    </div>
+                                    <div class="write-comment">
+                                        <h4>Viết bình luận</h4>
+                                        <div class="comment-full-page">
+                                            <div class="form-rep">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" rows="3" placeholder="Nhập nội dung" v-model="comment.content"></textarea>
+                                                    </div>
+                                                    <button type="button" data-toggle="modal" data-target="#exampleModal">Gửi</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="exampleModalLabel">Thông tin người bình luận</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="control-label">Tên:</label>
+                                                            <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment.name"> 
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="control-label">Email:</label>
+                                                            <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment.email">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" @click.stop.prevent="addComment()">Gửi</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="exampleModalLabel1">Thông tin người bình luận</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">Tên:</label>
+                                                        <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment_child.name"> 
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="recipient-name" class="control-label">Email:</label>
+                                                        <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment_child.email">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" @click="addCommentChild()">Gửi</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="news-related-detail">
-                                    <h4>Tin tức liên quan</h4>
-                                    <section class="regular3 slider">
-                                        <div class="items-3">
-                                            <div class="news-box-home">
-                                                <a href="news-detail.php" class="pic-news-home">
-                                                    <img src="/images/news/news-1.jpg" class="img-responsive" alt="">
-                                                    <ul>
-                                                        <li>19</li>
-                                                        <li>T.7</li>
-                                                    </ul>
-                                                </a>
-                                                <a href="news-detail.php">
-                                                    <h4>Những cuốn sách tốt bên những người bạn</h4>
-                                                </a>
-                                                <p>Những cuốn sách mà bút lực của người viết đã vượt qua giới hạn của thể loại và đối tượng độc giả...</p>
-                                            </div>
-                                        </div>
-                                        <div class="items-3">
-                                            <div class="news-box-home">
-                                                <a href="news-detail.php" class="pic-news-home">
-                                                    <img src="/images/news/news-2.jpg" class="img-responsive" alt="">
-                                                    <ul>
-                                                        <li>19</li>
-                                                        <li>T.7</li>
-                                                    </ul>
-                                                </a>
-                                                <a href="news-detail.php">
-                                                    <h4>Những cuốn sách tốt bên những người bạn</h4>
-                                                </a>
-                                                <p>Những cuốn sách mà bút lực của người viết đã vượt qua giới hạn của thể loại và đối tượng độc giả...</p>
-                                            </div>
-                                        </div>
-                                        <div class="items-3">
-                                            <div class="news-box-home">
-                                                <a href="news-detail.php" class="pic-news-home">
-                                                    <img src="/images/news/news-3.jpg" class="img-responsive" alt="">
-                                                    <ul>
-                                                        <li>19</li>
-                                                        <li>T.7</li>
-                                                    </ul>
-                                                </a>
-                                                <a href="news-detail.php">
-                                                    <h4>Những cuốn sách tốt bên những người bạn</h4>
-                                                </a>
-                                                <p>Những cuốn sách mà bút lực của người viết đã vượt qua giới hạn của thể loại và đối tượng độc giả...</p>
-                                            </div>
-                                        </div>
-                                        <div class="items-3">
-                                            <div class="news-box-home">
-                                                <a href="news-detail.php" class="pic-news-home">
-                                                    <img src="/images/news/news-2.jpg" class="img-responsive" alt="">
-                                                    <ul>
-                                                        <li>19</li>
-                                                        <li>T.7</li>
-                                                    </ul>
-                                                </a>
-                                                <a href="news-detail.php">
-                                                    <h4>Những cuốn sách tốt bên những người bạn</h4>
-                                                </a>
-                                                <p>Những cuốn sách mà bút lực của người viết đã vượt qua giới hạn của thể loại và đối tượng độc giả...</p>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div> -->
-
                             </div>
                         </div>
-
-
                     </div>
                     <div class="col-md-3 col-sm-4">
                         <div class="left-news">
@@ -228,16 +171,37 @@
     </div>
 </template> 
 <script>
-
+import Paginate from '../../../../components/paginate';
 export default {
+    components: { Paginate },
     data(){
         return {
             news:{},
-            categories:[]
+            categories:[],
+            comment: {
+                idPost: null,
+                name:'',
+                email:'',
+                content:'',
+                commentChild: [],
+            },
+            comment_child: {
+                name:'',
+                email:'',
+                content:''
+            },
+            comments:[],
+            list_post: {
+                current_page: 1,
+                last_page: 0,
+                total: 0,
+                per_page: 0
+            },
         }
     },
     created(){
         this.getNews();
+        this.getComment();
     },
     methods:{
         getNews(){
@@ -249,6 +213,46 @@ export default {
                     vm.categories = res.data.category;
                     vm.$store.state.loading = false;
                 });
+        },
+        getComment(){
+            var vm = this;
+            vm.$store.state.loading = true;
+            vm.$axios.get(`${vm.$store.state.api}/web/comment/${vm.$route.params.id}?page=${this.list_post.current_page}`)
+                .then(res => {
+                    vm.comments = res.data.comments.data;
+                    vm.list_post.current_page = res.data.comments.current_page;
+                    vm.list_post.last_page = res.data.comments.last_page;
+                    vm.list_post.total = res.data.comments.total;
+                    vm.$store.state.loading = false;
+                });
+        },
+        addComment(){
+            var vm = this;
+            vm.comment.idPost = vm.news.id;
+            vm.$axios.post(`${vm.$store.state.api}/web/comment`,vm.comment)
+                .then(res => {
+                    $('#exampleModal').modal('hide');
+                    vm.getComment();
+                    this.$forceUpdate();
+                });
+        },
+        replyComment(item){
+            var vm = this;
+            vm.comment = item;
+            item.reply = true;
+            item.content_reply = '@'+item.name+': ';
+            vm.$forceUpdate();
+        },
+        addCommentChild(){
+            var vm = this;
+            vm.comment_child.content = vm.comment.content_reply;
+            vm.comment.commentChild.push(vm.comment_child);
+            vm.$axios.post(`${vm.$store.state.api}/web/comment/${vm.comment.id}`, vm.comment)
+                .then(res => {
+                    $('#exampleModal1').modal('hide');
+                    this.getComment();
+                });
+            this.$forceUpdate();
         }
     },
     mounted() {
@@ -258,5 +262,10 @@ export default {
             shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest"]
         });
     },
+    watch: {
+        'list_post.current_page': function (new_val) {
+            this.getComment();
+        }
+    }
 }
 </script>

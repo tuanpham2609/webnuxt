@@ -95,7 +95,7 @@ export default {
                     vm.list_post.current_page = res.data.category.current_page;
                     vm.list_post.last_page = res.data.category.last_page;
                     vm.list_post.total = res.data.category.total;
-                     vm.$store.state.loading = false;
+                    vm.$store.state.loading = false;
                 });
         }
     },

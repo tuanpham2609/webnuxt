@@ -9,14 +9,36 @@
                 </div>
             </div>
         </div>
-
         <div class="contact-page">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="maps">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1361027390476!2d106.65103861528407!3d10.800886361694035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529477b5c7c99%3A0x567b889fd80bf3d8!2zMjAgQ-G7mW5nIEjDsmEsIFBoxrDhu51uZyA0LCBUw6JuIELDrG5oLCBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1532399832847" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-                        </div>
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <form class="form-contact" ref="contactForm">
+                            <div class="form-group">
+                                <label for="">Họ tên:</label>
+                                <ValidationProvider rules="required" v-slot="{ errors }">
+                                    <input type="text" placeholder="Nhập tên" class="form-control" v-model="contact.name">
+                                    <span>{{ errors[0] }}</span>
+                                </ValidationProvider>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Email:</label>
+                                <ValidationProvider rules="required|email" v-slot="{ errors }">
+                                    <input type="email" placeholder="Nhập email" class="form-control" v-model="contact.email">
+                                    <span>{{ errors[0] }}</span>
+                                </ValidationProvider>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Nội dung:</label>
+                                <ValidationProvider rules="required" v-slot="{ errors }">
+                                    <textarea placeholder="Nội dung" cols="30" rows="10" class="form-control" v-model="contact.content"></textarea>
+                                    <span>{{ errors[0] }}</span>
+                                </ValidationProvider>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-default" @click.stop.prevent="addNewContact()">GỬI NGAY</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="row">
@@ -48,3 +70,28 @@
         </div>
     </div>
 </template>
+<script>
+import { ValidationProvider } from "vee-validate";
+
+export default {
+    components: { ValidationProvider },
+    data(){
+        return{
+            contact:{
+                name:'',
+                email:'',
+                content:'',
+            }
+        }
+    },
+    methods:{
+        addNewContact(){
+            var vm = this;
+            vm.$axios.post(`${vm.$store.state.api}/web/contact`,vm.contact)
+                .then(res => {
+                    console.log(res)
+                });
+        }
+    }
+}
+</script>

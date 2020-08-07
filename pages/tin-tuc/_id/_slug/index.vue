@@ -65,7 +65,10 @@
                                             <div class="form-rep" v-if="item.reply">
                                                 <form>
                                                     <div class="form-group">
-                                                        <textarea class="form-control" rows="3" placeholder="Nhập nội dung" v-model="item.content_reply"></textarea>
+                                                        <ValidationProvider rules="required" v-slot="{ errors }">
+                                                            <textarea class="form-control" rows="3" placeholder="Nhập nội dung" v-model="item.content_reply"></textarea>
+                                                            <span>{{ errors[0] }}</span>
+                                                        </ValidationProvider>
                                                     </div>
                                                     <button type="button" data-toggle="modal" data-target="#exampleModal1">Gửi</button>
                                                 </form>
@@ -83,9 +86,12 @@
                                             <div class="form-rep">
                                                 <form>
                                                     <div class="form-group">
-                                                        <textarea class="form-control" rows="3" placeholder="Nhập nội dung" v-model="comment.content"></textarea>
+                                                        <ValidationProvider rules="required" v-slot="{ errors }">
+                                                            <textarea class="form-control" rows="3" placeholder="Nhập nội dung" v-model="comment.content"></textarea>
+                                                            <span>{{ errors[0] }}</span>
+                                                        </ValidationProvider>
                                                     </div>
-                                                    <button type="button" data-toggle="modal" data-target="#exampleModal">Gửi</button>
+                                                    <button type="button" data-toggle="modal" data-target="#exampleModal" :disabled="comment.content == ''">Gửi</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -101,11 +107,17 @@
                                                     <form>
                                                         <div class="form-group">
                                                             <label for="recipient-name" class="control-label">Tên:</label>
-                                                            <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment.name"> 
+                                                            <ValidationProvider rules="required" v-slot="{ errors }">
+                                                                <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment.name"> 
+                                                                <span>{{ errors[0] }}</span>
+                                                            </ValidationProvider>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="recipient-name" class="control-label">Email:</label>
-                                                            <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment.email">
+                                                            <ValidationProvider rules="required|email" v-slot="{ errors }">
+                                                                <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment.email">
+                                                                <span>{{ errors[0] }}</span>
+                                                            </ValidationProvider>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -127,11 +139,17 @@
                                                 <form>
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Tên:</label>
-                                                        <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment_child.name"> 
+                                                        <ValidationProvider rules="required" v-slot="{ errors }">
+                                                            <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment_child.name"> 
+                                                            <span>{{ errors[0] }}</span>
+                                                        </ValidationProvider>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="recipient-name" class="control-label">Email:</label>
-                                                        <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment_child.email">
+                                                        <ValidationProvider rules="required|email" v-slot="{ errors }">
+                                                            <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment_child.email">
+                                                            <span>{{ errors[0] }}</span>
+                                                        </ValidationProvider>
                                                     </div>
                                                 </form>
                                             </div>
@@ -172,8 +190,10 @@
 </template> 
 <script>
 import Paginate from '../../../../components/paginate';
+import { ValidationProvider } from "vee-validate";
+
 export default {
-    components: { Paginate },
+    components: { Paginate, ValidationProvider },
     data(){
         return {
             news:{},
@@ -233,7 +253,6 @@ export default {
                 .then(res => {
                     $('#exampleModal').modal('hide');
                     vm.getComment();
-                    this.$forceUpdate();
                 });
         },
         replyComment(item){
@@ -252,7 +271,6 @@ export default {
                     $('#exampleModal1').modal('hide');
                     this.getComment();
                 });
-            this.$forceUpdate();
         }
     },
     mounted() {

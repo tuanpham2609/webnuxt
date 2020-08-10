@@ -44,22 +44,30 @@
                                         <div id="share"></div>
                                     </div>
                                 </div>
-                                <div class="customer-comment" v-if="comments && comments.length > 0">
+                                <div class="customer-comment">
                                     <h4>Ý kiến khách hàng</h4>
                                     <div class="box-comment" v-for="(item, index) in comments" :key="index">
                                         <div class="txt-comment">
                                             <h5>{{item.name}}</h5>
-                                            <h6>
-                                                {{(item.created_at)?$dateFns.format(news.created_at, 'dd-MM-yyyy/hh:mm:ss'):null}} 
+                                            <h6 v-if="item.created_at">
+                                                {{$dateFns.format(item.created_at, 'dd-MM-yyyy/hh:mm:ss')}} 
                                                 <a @click="replyComment(item)"><i class="fa fa-mail-reply" data-toggle="tooltip" title="Trả lời"></i></a>
                                             </h6>
                                             <p>{{item.content}}</p>
                                         </div>
                                         <div class="rep-comment">
                                             <div class="box-comment">
-                                                <div class="txt-comment" v-for="(_item, _index) in item.commentChild" :key="_index">
-                                                    <h5>{{_item.name}}</h5>    
-                                                    <p>{{_item.content}}</p>
+                                                <div class="txt-comment" v-for="(commentIndex, _index) in commentsToShow" :key="_index">
+                                                    <h5>
+                                                        {{item.commentChild[commentIndex - 1].name}}
+                                                        <a @click="replyComment(item,item.commentChild[commentIndex - 1].name)">
+                                                            <i class="fa fa-mail-reply" data-toggle="tooltip" title="Trả lời"></i>
+                                                        </a>
+                                                    </h5>    
+                                                    <p>{{item.commentChild[commentIndex - 1].content}}</p>
+                                                </div>
+                                                <div v-if="commentsToShow < item.commentChild.length" class="form-rep">
+                                                    <form> <button @click="addShowChild(item)">Xem thêm</button> </form>
                                                 </div>
                                             </div>
                                             <div class="form-rep" v-if="item.reply">
@@ -217,6 +225,7 @@ export default {
                 total: 0,
                 per_page: 0
             },
+            commentsToShow: 5,
         }
     },
     created(){
@@ -255,11 +264,11 @@ export default {
                     vm.getComment();
                 });
         },
-        replyComment(item){
+        replyComment(item,name_child){
             var vm = this;
             vm.comment = item;
             item.reply = true;
-            item.content_reply = '@'+item.name+': ';
+            (name_child)?item.content_reply = '@'+name_child+': ': item.content_reply = '@'+item.name+': ';
             vm.$forceUpdate();
         },
         addCommentChild(){
@@ -271,6 +280,12 @@ export default {
                     $('#exampleModal1').modal('hide');
                     this.getComment();
                 });
+        },
+        addShowChild(item){
+            var vm = this; 
+            if(vm.commentsToShow > item.commentChild.length - vm.commentsToShow){
+                vm.commentsToShow +=  item.commentChild.length - vm.commentsToShow;
+            } else { vm.commentsToShow += vm.commentsToShow; }
         }
     },
     mounted() {

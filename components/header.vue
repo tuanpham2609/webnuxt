@@ -21,8 +21,8 @@
                         </div>
                         <div class="navbar-collapse1" id="menu">
                             <ul class="nav navbar-nav ed-ul">
-                                <li class="hidden-sm hidden-xs">
-                                    <nuxt-link to="/"><img :src="$store.state.api+'/img/'+menu.logo.img"></nuxt-link>
+                                <li class="hidden-sm hidden-xs" v-if="menu.logo">
+                                    <nuxt-link to="/"><img :src="$store.state.api+'/img/'+menu.logo.image"></nuxt-link>
                                 </li>
                                 <li v-for="(item , index) in menu.menu" :key="index">
                                     <nuxt-link :to="{name: 'the-loai-id-slug', params: { id:item.id,slug:item.slug } }">

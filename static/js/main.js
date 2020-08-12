@@ -103,7 +103,7 @@ function Helper(){
             speed: 900,
             prevArrow: false,
             nextArrow: false,
-            slidesToShow: 3,
+            slidesToShow: 6,
             slidesToScroll: 1,
             autoplay: true,
             autoplaySpeed: 2000,
@@ -111,14 +111,14 @@ function Helper(){
             {
                 breakpoint: 1199,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 4,
                     slidesToScroll:1
                 }
             },
             {
                 breakpoint: 992,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 3,
                     slidesToScroll:1
                 }
             },

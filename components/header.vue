@@ -29,9 +29,13 @@
                                         {{item.name}}
                                     </nuxt-link>
                                 </li>
-                                <!-- <li>
-                                    <nuxt-link to="/about">Giới thiệu</nuxt-link>
+                                <li>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="search" v-model="keysearch">
+                                        <button @click="SearchPost()">search</button>
+                                    </div>
                                 </li>
+                                <!--
                                 <li>
                                     <nuxt-link to="/post">Tin tức</nuxt-link>
                                 </li>
@@ -50,6 +54,11 @@
 import { mapGetters } from 'vuex';
 
 export default {
+    data(){
+        return{
+            keysearch:""
+        }
+    },
     created(){
         this.$store.dispatch('getMenu');
     },
@@ -57,6 +66,22 @@ export default {
         ...mapGetters({
             menu : 'dataHeader',
         })
+    },
+    methods: {
+        SearchPost(){
+            if(this.keysearch != ''){
+                this.$router.push({ path: '/search', query:{ name: this.keysearch } });
+            } else {
+                alert('Vui lòng nhập tìm kiếm !!!')
+            }
+        }
+    },
+     watch:{
+        '$route.path' : function(){
+            if(!this.$route.query.hasOwnProperty('keysearch')){
+                this.keysearch = ''
+            } 
+        }
     },
 }
 </script>

@@ -25,7 +25,7 @@
                                 <div class="txt-box-news-page">
                                     <h4>{{news.name}}</h4>
                                     <ul>
-                                        <li>Đăng bởi: Anh Tài</li>
+                                        <li>Đăng bởi: Tuan Pham</li>
                                         <li>Ngày đăng: {{(news.created_at)?$dateFns.format(news.created_at, 'dd-MM-yyyy/hh:mm:ss'):null}}</li>
                                     </ul>
                                 </div>
@@ -56,15 +56,17 @@
                                             <p>{{item.content}}</p>
                                         </div>
                                         <div class="rep-comment">
-                                            <div class="box-comment">
+                                            <div class="box-comment" v-if="item.commentChild && item.commentChild.length > 0">
                                                 <div class="txt-comment" v-for="(commentIndex, _index) in commentsToShow" :key="_index">
-                                                    <h5>
+                                                    <h5 v-if="item.commentChild[commentIndex - 1]">
                                                         {{item.commentChild[commentIndex - 1].name}}
-                                                        <a @click="replyComment(item,item.commentChild[commentIndex - 1].name)">
+                                                        <a @click="replyComment(item,item.commentChild[commentIndex - 1].name)" v-if="item.commentChild[commentIndex - 1]">
                                                             <i class="fa fa-mail-reply" data-toggle="tooltip" title="Trả lời"></i>
                                                         </a>
                                                     </h5>    
-                                                    <p>{{item.commentChild[commentIndex - 1].content}}</p>
+                                                    <p v-if="item.commentChild[commentIndex - 1]">
+                                                        {{item.commentChild[commentIndex - 1].content}}
+                                                    </p>
                                                 </div>
                                                 <div v-if="commentsToShow < item.commentChild.length" class="form-rep">
                                                     <form> <button @click="addShowChild(item)">Xem thêm</button> </form>
@@ -95,11 +97,11 @@
                                                 <form>
                                                     <div class="form-group">
                                                         <ValidationProvider rules="required" v-slot="{ errors }">
-                                                            <textarea class="form-control" rows="3" placeholder="Nhập nội dung" v-model="comment.content"></textarea>
+                                                            <textarea class="form-control" rows="3" placeholder="Nhập nội dung" v-model="content_description"></textarea>
                                                             <span>{{ errors[0] }}</span>
                                                         </ValidationProvider>
                                                     </div>
-                                                    <button type="button" data-toggle="modal" data-target="#exampleModal" :disabled="comment.content == ''">Gửi</button>
+                                                    <button type="button" data-toggle="modal" data-target="#exampleModal" :disabled="content_description == ''">Gửi</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -111,60 +113,66 @@
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                     <h4 class="modal-title" id="exampleModalLabel">Thông tin người bình luận</h4>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form>
-                                                        <div class="form-group">
-                                                            <label for="recipient-name" class="control-label">Tên:</label>
-                                                            <ValidationProvider rules="required" v-slot="{ errors }">
-                                                                <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment.name"> 
-                                                                <span>{{ errors[0] }}</span>
-                                                            </ValidationProvider>
+                                                <template>
+                                                    <ValidationObserver v-slot="{ invalid }">
+                                                        <div class="modal-body">
+                                                            <form>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="control-label">Tên:</label>
+                                                                    <ValidationProvider rules="required" v-slot="{ errors }">
+                                                                        <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment.name"> 
+                                                                        <span>{{ errors[0] }}</span>
+                                                                    </ValidationProvider>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="control-label">Email:</label>
+                                                                    <ValidationProvider rules="required|email" v-slot="{ errors }">
+                                                                        <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment.email">
+                                                                        <span>{{ errors[0] }}</span>
+                                                                    </ValidationProvider>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="recipient-name" class="control-label">Email:</label>
-                                                            <ValidationProvider rules="required|email" v-slot="{ errors }">
-                                                                <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment.email">
-                                                                <span>{{ errors[0] }}</span>
-                                                            </ValidationProvider>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button :disabled="invalid" type="button" class="btn btn-primary" @click.stop.prevent="addComment()">Gửi</button>
                                                         </div>
-                                                    </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary" @click.stop.prevent="addComment()">Gửi</button>
-                                                </div>
+                                                    </ValidationObserver>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="exampleModalLabel1">Thông tin người bình luận</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="control-label">Tên:</label>
-                                                        <ValidationProvider rules="required" v-slot="{ errors }">
-                                                            <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment_child.name"> 
-                                                            <span>{{ errors[0] }}</span>
-                                                        </ValidationProvider>
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="exampleModalLabel1">Thông tin người bình luận</h4>
+                                                </div>
+                                                <ValidationObserver v-slot="{ invalid }">
+                                                    <div class="modal-body">
+                                                        <form>
+                                                            <div class="form-group">
+                                                                <label for="recipient-name" class="control-label">Tên:</label>
+                                                                <ValidationProvider rules="required" v-slot="{ errors }">
+                                                                    <input type="text" class="form-control" placeholder="Nhập tên..." v-model="comment_child.name"> 
+                                                                    <span>{{ errors[0] }}</span>
+                                                                </ValidationProvider>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="recipient-name" class="control-label">Email:</label>
+                                                                <ValidationProvider rules="required|email" v-slot="{ errors }">
+                                                                    <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment_child.email">
+                                                                    <span>{{ errors[0] }}</span>
+                                                                </ValidationProvider>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="recipient-name" class="control-label">Email:</label>
-                                                        <ValidationProvider rules="required|email" v-slot="{ errors }">
-                                                            <input type="text" class="form-control" placeholder="Nhập email..." v-model="comment_child.email">
-                                                            <span>{{ errors[0] }}</span>
-                                                        </ValidationProvider>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button :disabled="invalid" type="button" class="btn btn-primary" @click="addCommentChild()">Gửi</button>
                                                     </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary" @click="addCommentChild()">Gửi</button>
-                                            </div>
+                                                </ValidationObserver>
                                             </div>
                                         </div>
                                     </div>
@@ -198,10 +206,10 @@
 </template> 
 <script>
 import Paginate from '../../../../components/paginate';
-import { ValidationProvider } from "vee-validate";
+import { ValidationProvider , ValidationObserver } from "vee-validate";
 
 export default {
-    components: { Paginate, ValidationProvider },
+    components: { Paginate, ValidationProvider , ValidationObserver },
     data(){
         return {
             news:{},
@@ -226,6 +234,7 @@ export default {
                 per_page: 0
             },
             commentsToShow: 5,
+            content_description: ''
         }
     },
     created(){
@@ -258,10 +267,17 @@ export default {
         addComment(){
             var vm = this;
             vm.comment.idPost = vm.news.id;
+            vm.comment.content = vm.content_description;
             vm.$axios.post(`${vm.$store.state.api}/web/comment`,vm.comment)
                 .then(res => {
                     $('#exampleModal').modal('hide');
                     vm.getComment();
+                    vm.comment.idPost  = null;
+                    vm.comment.name  = '';
+                    vm.comment.email  = '';
+                    vm.comment.content  = '';
+                    vm.content_description  = '';
+                    vm.comment.commentChild  = [];
                 });
         },
         replyComment(item,name_child){
@@ -279,6 +295,9 @@ export default {
                 .then(res => {
                     $('#exampleModal1').modal('hide');
                     this.getComment();
+                    vm.comment_child.name  = '';
+                    vm.comment_child.email  = '';
+                    vm.comment.content = ''
                 });
         },
         addShowChild(item){

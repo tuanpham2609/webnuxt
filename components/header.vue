@@ -1,3 +1,45 @@
+<style>
+    .btn-search {
+        display: block;
+        color: #fafafa;
+        position: relative;
+        padding: 5px;
+    }
+    .form-search {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        -webkit-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transform: translateY(30px);
+        transform: translateY(30px);
+    }
+    .form-search form {
+        display: flex;
+        width: 250px;
+        position: relative;
+    }
+    .form-search form input {
+        width: calc(100% - 34px);
+        border-radius: 0;
+    }
+    .form-search form button {
+        width: 34px;
+        background: #ff7e5f;
+        color: #fff;
+        border-color: #ff7e5f;
+        border-radius: 0;
+        border-color: #eee;
+    }
+    .form-search.active {
+        -webkit-transform: none;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+    }
+</style>
 <template>
     <div>
         <header class="header">
@@ -30,18 +72,16 @@
                                     </nuxt-link>
                                 </li>
                                 <li>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="search" v-model="keysearch">
-                                        <button @click="SearchPost()">search</button>
+                                    <a href="javascript:void(0)" class="btn-search" id="btn-search">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                    <div id="search" class="form-search">
+                                        <form >
+                                            <input type="text" class="form-control" placeholder="Nhập từ khóa cần tìm ..." v-model="keysearch">
+                                            <button type="button" class="btn btn-search" @click="SearchPost()"><i class="fa fa-search"></i></button>
+                                        </form>
                                     </div>
                                 </li>
-                                <!--
-                                <li>
-                                    <nuxt-link to="/post">Tin tức</nuxt-link>
-                                </li>
-                                <li>
-                                    <nuxt-link to="/contact">Liên hệ</nuxt-link>
-                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -76,7 +116,15 @@ export default {
             }
         }
     },
-     watch:{
+    updated(){
+        $('#btn-search').on('click', function(){
+            $('#search').toggleClass('active');
+            setTimeout( function(){
+                $('#search input').focus();
+            }, 500);
+        })
+    },
+    watch:{
         '$route.path' : function(){
             if(!this.$route.query.hasOwnProperty('keysearch')){
                 this.keysearch = ''

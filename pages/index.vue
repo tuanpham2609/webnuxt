@@ -1,78 +1,47 @@
 <template>
   <div>
-    <section class="banner-home">
+    <section class="banner-home" v-if="menu">
       <div class="container">
         <div class="row">
           <div class="col-md-9 col-sm-12">
             <section class="regular1 slider">
-              <div class="items-1">
-                <a href="#"><img src="/images/banner/banner-1.jpg"></a>
-              </div>
-              <div class="items-1">
-                <a href="#"><img src="/images/banner/banner-2.jpg"></a>
+              <div class="items-1"> 
+                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id: menu.topTrending[0].id,slug:menu.topTrending[0].slug } }" class="pic-prd">
+                  <img :src="$store.state.api+'/img/'+ menu.topTrending[0].image" :alt="menu.topTrending[0].name" :title="menu.topTrending[0].name">
+                </nuxt-link>
+                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[0].id,slug:menu.topTrending[0].slug } }">
+                  <h4 :title="menu.topTrending[0].name">{{menu.topTrending[0].name}}</h4>
+                </nuxt-link>
               </div>
             </section>
           </div>
           <div class="col-md-3 col-sm-12">
-            <div class="row">
+            <div class="row" v-if="menu && menu.topTrending">
               <div class="col-md-12 col-xs-12 col-sm-6">
                 <div class="box-prod">
-                  <a href="product-detail.php" class="pic-prd">
-                    <img src="/images/banner/banner-1.jpg" alt="">
-                  </a>
-                  <div class="txt-prd">
-                    <a href="product-detail.php">
-                      <h4>Duyệt bộ sưu tập các sản phẩm bán chạy nhất và hàng đầu của chúng tôi. Bạn chắc chắn sẽ tìm
-                        thấy những gì bạn đang tìm kiếm.</h4>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-xs-12 col-sm-6">
-                <div class="box-prod">
-                  <a href="product-detail.php" class="pic-prd">
-                    <img src="/images/banner/banner-1.jpg" alt="">
-                  </a>
-                  <div class="txt-prd">
-                    <a href="product-detail.php">
-                      <h4>Duyệt bộ sưu tập các sản phẩm bán chạy nhất và hàng đầu của chúng tôi. Bạn chắc chắn sẽ tìm
-                        thấy những gì bạn đang tìm kiếm.</h4>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="our-product" v-if="menu">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="title-page">
-              <h3>Bài viết nổi bật</h3>
-            </div>
-          </div>
-          <div class="col-sm-12">
-            <div class="regular3 slider">
-              <div class="item" v-for="(item, index) in menu.topTrending" :key="index">
-                <div class="box-prods">
-                  <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd">
-                    <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
+                  <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[1].id,slug:menu.topTrending[1].slug } }" class="pic-prd">
+                    <img :src="$store.state.api+'/img/'+menu.topTrending[1].image" :alt="menu.topTrending[1].name" :title="menu.topTrending[1].name">
                   </nuxt-link>
                   <div class="txt-prd">
-                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
-                      <h4>{{item.name}}</h4>
+                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[1].id,slug:menu.topTrending[1].slug } }">
+                      <h4 :title="menu.topTrending[1].name">{{menu.topTrending[1].name}}</h4>
                     </nuxt-link>
-                    <p>{{item.short_content}}</p>
                   </div>
                 </div>
               </div>
-             </div>
-          </div>
-          <div class="col-sm-12">
-            <a href="#"><img src="/images/quangcao/pic-2.jpg" class="img-responsive" alt=""></a>
+              <div class="col-md-12 col-xs-12 col-sm-6">
+                <div class="box-prod">
+                  <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[2].id,slug:menu.topTrending[2].slug } }" class="pic-prd">
+                    <img :src="$store.state.api+'/img/'+menu.topTrending[2].image" :alt="menu.topTrending[2].name" :title="menu.topTrending[2].name">
+                  </nuxt-link>
+                  <div class="txt-prd">
+                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[2].id,slug:menu.topTrending[2].slug } }">
+                      <h4 :title="menu.topTrending[2].name">{{menu.topTrending[2].name}}</h4>
+                    </nuxt-link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -91,129 +60,6 @@
                 <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
               </nuxt-link>
               <div class="txt-prd">
-                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
-                  <h4 :title="item.name">{{item.name}}</h4>
-                </nuxt-link>
-                <p>{{item.short_content}}</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12">
-            <a href="#"><img src="/images/quangcao/pic-2.jpg" class="img-responsive" alt=""></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="new-books-home" v-if="menu">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="title-page">
-              <h3>THEO CHỦ ĐỀ / XÃ HỘI</h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6" v-for="(item, index) in menu.XH" :key="index">
-            <div class="box-prods1">
-              <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd1">
-                <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
-              </nuxt-link>
-              <div class="txt-prd1">
-                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
-                  <h4 :title="item.name">{{item.name}}</h4>
-                </nuxt-link>
-                <p>{{item.short_content}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="new-books-home" v-if="menu">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="title-page">
-              <h3>THEO CHỦ ĐỀ / KINH TẾ</h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6" v-for="(item, index) in menu.KinhTe" :key="index">
-            <div class="box-prods1">
-              <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd1">
-                <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
-              </nuxt-link>
-              <div class="txt-prd1">
-                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
-                  <h4 :title="item.name">{{item.name}}</h4>
-                </nuxt-link>
-                <p>{{item.short_content}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="new-books-home" v-if="menu">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="title-page">
-              <h3>THEO CHỦ ĐỀ / GIẢI TRÍ</h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6" v-for="(item, index) in menu.GiaiTri" :key="index">
-            <div class="box-prods1">
-              <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd1">
-                <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
-              </nuxt-link>
-              <div class="txt-prd1">
-                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
-                  <h4 :title="item.name">{{item.name}}</h4>
-                </nuxt-link>
-                <p>{{item.short_content}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="new-books-home" v-if="menu">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="title-page">
-              <h3>THEO CHỦ ĐỀ / GIÁO DỤC</h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6" v-for="(item, index) in menu.GiaoDuc" :key="index">
-            <div class="box-prods1">
-              <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd1">
-                <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
-              </nuxt-link>
-              <div class="txt-prd1">
-                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
-                  <h4 :title="item.name">{{item.name}}</h4>
-                </nuxt-link>
-                <p>{{item.short_content}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="new-books-home" v-if="menu">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="title-page">
-              <h3>THEO CHỦ ĐỀ / CÔNG NGHỆ</h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6" v-for="(item, index) in menu.Review" :key="index">
-            <div class="box-prods1">
-              <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd1">
-                <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
-              </nuxt-link>
-              <div class="txt-prd1">
                 <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
                   <h4 :title="item.name">{{item.name}}</h4>
                 </nuxt-link>

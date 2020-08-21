@@ -54,8 +54,8 @@
               <h3>DÀNH CHO BẠN</h3>
             </div>
           </div>
-          <div class="col-sm-12" v-for="(item, index) in menu.HomePost" :key="index">
-            <div class="box-prods">
+          <div class="col-sm-6">
+            <div class="box-prods" v-for="(item, index) in menu.HomePost" :key="index">
               <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd">
                 <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
               </nuxt-link>
@@ -67,6 +67,7 @@
               </div>
             </div>
           </div>
+          <div class="col-6"></div>
         </div>
       </div>
     </div>

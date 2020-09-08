@@ -1,3 +1,25 @@
+<style scoped>
+  .d-flex {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+  }
+  .d-flex::-webkit-scrollbar {
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    width: 8px;
+  }
+  .d-flex::-webkit-scrollbar-thumb {
+    background-color: #ff7e5fa1;
+    border-radius: 10px;
+    height: 4px;
+  }
+  .d-flex .box-prods {
+    margin-right: 5px;
+    margin-bottom: 0;
+  }
+</style>
 <template>
   <div>
     <section class="banner-home" v-if="menu">
@@ -46,6 +68,17 @@
         </div>
       </div>
     </section>
+    <div class="top-trending" v-if="menu">
+      <div class="container">
+        <div class="d-flex">
+          <div class="box-prods" v-for="(item, index) in menu.HomePost" :key="index">
+            <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd">
+              <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
+            </nuxt-link>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="news-home" v-if="menu"> 
       <div class="container">
         <div class="row">

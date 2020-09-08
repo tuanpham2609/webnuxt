@@ -3,7 +3,7 @@
     <div id="loading-box" class="text-center" v-if="$store.state.loading">
       <img src="/images/loading.gif" />
     </div>
-    <section class="main">
+    <section class="main" id="scroll-body">
       <HeaDer />
       <section class="wrapper">
         <Nuxt />
@@ -36,6 +36,17 @@
   #loading-box.close{
     opacity: 0;
     display: none;
+  }
+  body::-webkit-scrollbar {
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    width: 8px;
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: #ff7e5fa1;
+    border-radius: 10px;
+    height: 4px;
   }
 </style>
 <script>

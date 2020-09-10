@@ -67,7 +67,7 @@
                                     <nuxt-link to="/"><img :src="$store.state.api+'/img/'+menu.logo.image"></nuxt-link>
                                 </li>
                                 <li v-for="(item , index) in menu.menu" :key="index">
-                                    <nuxt-link :to="{name: 'the-loai-id-slug', params: { id:item.id,slug:item.slug } }">
+                                    <nuxt-link :to="{name: 'category', params: { id:item.id,slug:item.slug } }">
                                         {{item.name}}
                                     </nuxt-link>
                                 </li>

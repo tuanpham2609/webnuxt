@@ -28,10 +28,10 @@
           <div class="col-md-9 col-sm-12">
             <section class="regular1 slider">
               <div class="items-1"> 
-                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id: menu.topTrending[0].id,slug:menu.topTrending[0].slug } }" class="pic-prd">
+                <nuxt-link :to="{name: 'news', params: { id: menu.topTrending[0].id,slug:menu.topTrending[0].slug } }" class="pic-prd">
                   <img :src="$store.state.api+'/img/'+ menu.topTrending[0].image" :alt="menu.topTrending[0].name" :title="menu.topTrending[0].name">
                 </nuxt-link>
-                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[0].id,slug:menu.topTrending[0].slug } }">
+                <nuxt-link :to="{name: 'news', params: { id:menu.topTrending[0].id,slug:menu.topTrending[0].slug } }">
                   <h4 :title="menu.topTrending[0].name">{{menu.topTrending[0].name}}</h4>
                 </nuxt-link>
               </div>
@@ -41,11 +41,11 @@
             <div class="row" v-if="menu && menu.topTrending">
               <div class="col-md-12 col-xs-12 col-sm-6">
                 <div class="box-prod">
-                  <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[1].id,slug:menu.topTrending[1].slug } }" class="pic-prd">
+                  <nuxt-link :to="{name: 'news', params: { id:menu.topTrending[1].id,slug:menu.topTrending[1].slug } }" class="pic-prd">
                     <img :src="$store.state.api+'/img/'+menu.topTrending[1].image" :alt="menu.topTrending[1].name" :title="menu.topTrending[1].name">
                   </nuxt-link>
                   <div class="txt-prd">
-                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[1].id,slug:menu.topTrending[1].slug } }">
+                    <nuxt-link :to="{name: 'news', params: { id:menu.topTrending[1].id,slug:menu.topTrending[1].slug } }">
                       <h4 :title="menu.topTrending[1].name">{{menu.topTrending[1].name}}</h4>
                     </nuxt-link>
                   </div>
@@ -53,11 +53,11 @@
               </div>
               <div class="col-md-12 col-xs-12 col-sm-6">
                 <div class="box-prod">
-                  <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[2].id,slug:menu.topTrending[2].slug } }" class="pic-prd">
+                  <nuxt-link :to="{name: 'news', params: { id:menu.topTrending[2].id,slug:menu.topTrending[2].slug } }" class="pic-prd">
                     <img :src="$store.state.api+'/img/'+menu.topTrending[2].image" :alt="menu.topTrending[2].name" :title="menu.topTrending[2].name">
                   </nuxt-link>
                   <div class="txt-prd">
-                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:menu.topTrending[2].id,slug:menu.topTrending[2].slug } }">
+                    <nuxt-link :to="{name: 'news', params: { id:menu.topTrending[2].id,slug:menu.topTrending[2].slug } }">
                       <h4 :title="menu.topTrending[2].name">{{menu.topTrending[2].name}}</h4>
                     </nuxt-link>
                   </div>
@@ -72,7 +72,7 @@
       <div class="container">
         <div class="d-flex">
           <div class="box-prods" v-for="(item, index) in menu.HomePost" :key="index">
-            <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd">
+            <nuxt-link :to="{name: 'news', params: { id:item.id,slug:item.slug } }" class="pic-prd">
               <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
             </nuxt-link>
           </div>
@@ -89,11 +89,11 @@
           </div>
           <div class="col-sm-6">
             <div class="box-prods" v-for="(item, index) in menu.HomePost" :key="index">
-              <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-prd">
+              <nuxt-link :to="{name: 'news', params: { id:item.id,slug:item.slug } }" class="pic-prd">
                 <img :src="$store.state.api+'/img/'+item.image" :alt="item.name" :title="item.name">
               </nuxt-link>
               <div class="txt-prd">
-                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }">
+                <nuxt-link :to="{name: 'news', params: { id:item.id,slug:item.slug } }">
                   <h4 :title="item.name">{{item.name}}</h4>
                 </nuxt-link>
                 <p>{{item.short_content}}</p>

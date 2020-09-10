@@ -69,7 +69,7 @@
                                                     </p>
                                                 </div>
                                                 <div v-if="commentsToShow < item.commentChild.length" class="form-rep">
-                                                    <form> <button @click="addShowChild(item)">Xem thêm</button> </form>
+                                                    <form> <button type="button" @click="addShowChild(item)">Xem thêm</button> </form>
                                                 </div>
                                             </div>
                                             <div class="form-rep" v-if="item.reply">

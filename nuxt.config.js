@@ -83,5 +83,26 @@ export default {
   */
   build: {
     transpile: ["vee-validate/dist/rules"],
+  },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push(
+        {
+          name: 'page_404',
+          path: '*',
+          component: resolve(__dirname, 'pages/404.vue')
+        },
+        {
+          name: 'news',
+          path: '/tin-tuc/:id/:slug',
+          component: resolve(__dirname, 'pages/tin-tuc/index')
+        },
+        {
+          name: 'category',
+          path: '/the-loai/:id/:slug',
+          component: resolve(__dirname, 'pages/the-loai/index')
+        }
+      )
+    }
   }
 }

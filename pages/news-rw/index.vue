@@ -185,7 +185,7 @@
                             <div class="news-highlights" v-if="categories">
                                 <h4>Tin tức nổi bật</h4>
                                 <div class="box-news-hl-full">
-                                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="box-news-hl" 
+                                    <nuxt-link :to="{name: 'news', params: { id:item.id,slug:item.slug } }" class="box-news-hl" 
                                         v-for="(item, index) in categories" :key="index">
                                         <div class="ed-img-news-hl">
                                             <img :src="$store.state.api+'/img/'+item.image" alt="item.name">
@@ -205,7 +205,7 @@
     </div>
 </template> 
 <script>
-import Paginate from '../../../../components/paginate';
+import Paginate from '../../components/paginate';
 import { ValidationProvider , ValidationObserver } from "vee-validate";
 
 export default {

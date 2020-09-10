@@ -15,7 +15,7 @@
                     <div class="col-md-4 col-sm-3 col-xs-12" v-for="(item, index) in search" :key="index">
                         <div class="right-news">
                             <div class="box-news-page">
-                                <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="pic-news-page">
+                                <nuxt-link :to="{name: 'news', params: { id:item.id,slug:item.slug } }" class="pic-news-page">
                                     <img v-if="item.image" :src="$store.state.api+'/img/'+item.image" class="img-responsive">
                                 </nuxt-link>
                                 <ul class="date-box-news-page">
@@ -23,7 +23,7 @@
                                     <li>Tháng {{(item.created_at)?$dateFns.format(item.created_at, 'MM'):null}}</li>
                                 </ul>
                                 <div class="txt-box-news-page">
-                                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }"><h4>{{item.name}}</h4></nuxt-link>
+                                    <nuxt-link :to="{name: 'news', params: { id:item.id,slug:item.slug } }"><h4>{{item.name}}</h4></nuxt-link>
                                     <ul>
                                         <li>Đăng bởi: Pham duy tuan</li>
                                         <li>Ngày đăng: {{(item.created_at)?$dateFns.format(item.created_at, 'dd-MM-yyyy/hh:mm:ss'):null}}</li>
@@ -46,7 +46,7 @@
                             <div class="news-highlights" v-if="siderbar">
                                 <h4>Tin tức nổi bật</h4>
                                 <div class="box-news-hl-full">
-                                    <nuxt-link :to="{name: 'tin-tuc-id-slug', params: { id:item.id,slug:item.slug } }" class="box-news-hl" 
+                                    <nuxt-link :to="{name: 'news', params: { id:item.id,slug:item.slug } }" class="box-news-hl" 
                                         v-for="(item, index) in siderbar" :key="index">
                                         <div class="ed-img-news-hl">
                                             <img :src="$store.state.api+'/img/'+item.image" :alt="item.name">

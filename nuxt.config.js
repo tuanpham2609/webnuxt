@@ -90,17 +90,17 @@ export default {
         {
           name: 'page_404',
           path: '*',
-          component: resolve(__dirname, 'pages/404.vue')
+          component: 'pages/404.vue'
         },
         {
           name: 'news',
           path: '/tin-tuc/:id/:slug',
-          component: resolve(__dirname, 'pages/tin-tuc/index')
+          component: 'pages/news-rw/index'
         },
         {
           name: 'category',
           path: '/the-loai/:id/:slug',
-          component: resolve(__dirname, 'pages/the-loai/index')
+          component: 'pages/categories/index'
         }
       )
     }

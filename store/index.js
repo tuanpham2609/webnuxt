@@ -5,7 +5,7 @@ const createStore = () => {
         state: {
             api: 'http://127.0.0.1:8000',
             headerData: null,
-            loading: true
+            loading: false
         },
         getters: {
             dataHeader(state) {
@@ -20,11 +20,11 @@ const createStore = () => {
         actions: {
             async getMenu({ commit, state }) {
                 var vm = this;
-                state.loading = true;
-                vm.$axios.get(`${state.api}/web/header`).then(res => {
-                    commit('GET_MENU', res.data);
-                    state.loading = false;
-                });
+                // state.loading = true;
+                // vm.$axios.get(`${state.api}/web/header`).then(res => {
+                //     commit('GET_MENU', res.data);
+                //     state.loading = false;
+                // });
             }
         }
     })
